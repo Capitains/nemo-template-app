@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <cache-folder>./cache_folder</cache-folder>
+    <corpora>
+        <!-- You can simply add corpora here that by adding nodes like the following :
+
+        <corpus>data/priapeia</corpus>
+
+        Be careful in how you write the path : it should be the relative path from the current folder, or an
+        absolute path.
+        -->
+        <corpus>example_corpora/priapeia</corpus>
+    </corpora>
+    <collections>
+        <collection default="true">
+            <name lang="fre">Collection générale</name>
+            <name lang="eng">General Collection</name>
+            <identifier>general</identifier>
+        </collection>
+        <collection>
+            <name lang="fre">Sources secondaires</name>
+            <name lang="eng">Secondary Sources</name>
+            <identifier>sources</identifier>
+            <id-starts-with>urn:cts:latinLit</id-starts-with>
+        </collection>
+    </collections>
+</configuration>
