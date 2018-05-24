@@ -9,7 +9,7 @@ from .advanced.xslts import build_xslt_dict
 
 
 current_folder = os.path.dirname(__file__)
-configuration_path = os.path.abspath(os.path.join(current_folder, "../nemo.xml"))
+configuration_path = os.path.abspath(os.path.join(current_folder, "../app.xml"))
 
 with open(configuration_path) as xml_file:
     configuration_xml = etree.parse(xml_file)

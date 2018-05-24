@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<?xml-model href="./configuration-schemas/corpora.rng"
+<?xml-model href="./configuration-schemas/app.rng"
     schematypens="http://relaxng.org/ns/structure/1.0"?>
 <configuration>
     <full-text-route>true</full-text-route>
