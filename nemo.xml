@@ -11,5 +11,6 @@
     </chunking>
     <xslts>
         <default>xsl/default.xsl</default>
+        <xsl identifier="urn:cts:aperire:delver.init.opp-lat1">xsl/copy.xsl</xsl>
     </xslts>
 </configuration>

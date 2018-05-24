@@ -13,9 +13,12 @@ from .utils import relative_folder
 
 def collection_dispatcher_builder(
         collection,
-        prefix_filters, citation_filters, directory_filter,
+        prefix_filters, citation_filters, directory_filters,
         path=None, **kwargs):
     """
+
+    Any condition that is True would make the would category True.
+    All condition's category need to be True : A filter and a Path needs to be True
 
     :param collection:
     :param prefix_filters:
@@ -23,26 +26,29 @@ def collection_dispatcher_builder(
     :param directory_filter:
     :return:
     """
-    prefix_results = len(prefix_filters) == 0
-    citation_results = len(citation_filters) == 0
-    directory_results = len(directory_filter) == 0
+    def dispatcher(collection, path=None, **kwargs):
+        prefix_results = len(prefix_filters) == 0
+        citation_results = len(citation_filters) == 0
+        directory_results = len(directory_filters) == 0
 
-    for anonymous_function in prefix_filters:
-        if anonymous_function(collection) is True:
-            prefix_results = True
-            break
+        for anonymous_function in prefix_filters:
+            if anonymous_function(collection) is True:
+                prefix_results = True
+                break
 
-    for anonymous_function in citation_filters:
-        if anonymous_function(collection) is True:
-            citation_results = True
-            break
+        for anonymous_function in citation_filters:
+            if anonymous_function(collection) is True:
+                citation_results = True
+                break
 
-    for anonymous_function in directory_filter:
-        if anonymous_function(collection, path=path) is True:
-            directory_results = True
-            break
+        for anonymous_function in directory_filters:
+            print(collection, path)
+            if anonymous_function(collection, path=path) is True:
+                directory_results = True
+                break
 
-    return prefix_results and citation_results and directory_results
+        return prefix_results and citation_results and directory_results
+    return dispatcher
 
 
 def citation_contain_filter(collection, citation_name):
@@ -67,7 +73,6 @@ def build_resolver(configuration_file):
         relative_folder(configuration_file, directory)
         for directory in xml.xpath("//corpora/corpus/text()")
     ]
-
     default_collection = None
     general_collection = CtsTextInventoryCollection()
     filters_to_register = []
@@ -86,7 +91,6 @@ def build_resolver(configuration_file):
 
         # We look at dispatching filters in the collection
         for filters in collection.xpath("./filter"):
-
             # We register prefix filters
             prefix_filters = []
             for prefix in filters.xpath("./id-starts-with/text()"):
@@ -99,7 +103,7 @@ def build_resolver(configuration_file):
 
             # We register path based filters
             directory_filters = []
-            for target_directory in filters.xpath("./in-folder/text()"):
+            for target_directory in filters.xpath("./folder/text()"):
                 directory_filters.append(
                     lambda collection, path=None: path.startswith(
                         relative_folder(configuration_file, target_directory)
@@ -109,13 +113,11 @@ def build_resolver(configuration_file):
             filters_to_register += [
                 (
                     identifier,
-                    lambda collection, path=None, **kwargs: collection_dispatcher_builder(
+                    collection_dispatcher_builder(
                         collection,
                         prefix_filters,
                         citation_filters,
-                        directory_filters,
-                        path=path,
-                        **kwargs
+                        directory_filters
                     )
                 )
             ]

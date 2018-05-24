@@ -11,6 +11,7 @@
         -->
         <corpus>example_corpora/priapeia</corpus>
         <corpus>example_corpora/other</corpus>
+        <corpus>example_corpora/aperire</corpus>
     </corpora>
     <collections>
         <collection default="true">
@@ -19,16 +20,19 @@
             <identifier>general</identifier>
         </collection>
         <collection>
+            <name lang="fre">Ressource pour l'enseignement</name>
+            <name lang="eng">Teaching Resource</name>
+            <identifier>teaching</identifier>
+            <filter>
+                <folder>example_corpora/aperire</folder>
+            </filter>
+        </collection>
+        <collection>
             <name lang="fre">Priapées</name>
             <name lang="eng">Priapées</name>
             <identifier>sources</identifier>
             <filter>
-                <!--
-                    Not Available right Now : will need to wait Nautilus 2.0.0
-                    <citation-contains>line</citation-contains>
-                -->
-                <!-- <id-starts-with>urn:cts:latinLit:phi1103</id-starts-with> -->
-                <in-folder>example_corpora/priapeia</in-folder>
+                <id-starts-with>urn:cts:latinLit:phi1103</id-starts-with>
             </filter>
         </collection>
     </collections>

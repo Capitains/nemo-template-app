@@ -10,7 +10,7 @@
             </xsl:if>
             <xsl:element name="a">
                 <xsl:attribute name="href">
-                    <xsl:value-of select="concat('http://cts.perseids.org/api/cts/?request=GetPassage', '&#38;', 'urn=', substring-before(concat($pText,','),','))"/>
+                    <xsl:value-of select="concat('/api/cts?request=GetPassage', '&#38;', 'urn=', substring-before(concat($pText,','),','))"/>
                 </xsl:attribute>
                 <xsl:attribute name="target">_blank</xsl:attribute>
                 <xsl:value-of select="substring-before(concat($pText,','),',')" />

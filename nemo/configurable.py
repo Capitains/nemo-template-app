@@ -5,11 +5,13 @@ from lxml import etree
 from .advanced.nautilus import build_resolver
 from .advanced.chunker import build_chunker
 from .advanced.nemo import BuildNemoClass
+from .advanced.xslts import build_xslt_dict
 
 
 current_folder = os.path.dirname(__file__)
+configuration_path = os.path.abspath(os.path.join(current_folder, "../nemo.xml"))
 
-with open(os.path.join(current_folder, "../nemo.xml")) as xml_file:
+with open(configuration_path) as xml_file:
     configuration_xml = etree.parse(xml_file)
 
 organizer, resolver, cache = build_resolver(
@@ -20,6 +22,8 @@ organizer, resolver, cache = build_resolver(
 )
 
 chunker = build_chunker(configuration_xml)
+
+xslt_dict = build_xslt_dict(configuration_xml, configuration_path)
 
 nemo_class = BuildNemoClass(configuration_xml)
 
