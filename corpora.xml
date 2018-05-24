@@ -10,6 +10,7 @@
         absolute path.
         -->
         <corpus>example_corpora/priapeia</corpus>
+        <corpus>example_corpora/other</corpus>
     </corpora>
     <collections>
         <collection default="true">
@@ -18,10 +19,16 @@
             <identifier>general</identifier>
         </collection>
         <collection>
-            <name lang="fre">Sources secondaires</name>
-            <name lang="eng">Secondary Sources</name>
+            <name lang="fre">Poésie</name>
+            <name lang="eng">Poetry</name>
             <identifier>sources</identifier>
-            <id-starts-with>urn:cts:latinLit</id-starts-with>
+            <filter>
+                <!--
+                    Not Available right Now : will need to wait Nautilus 2.0.0
+                    <citation-contains>line</citation-contains>
+                -->
+                    <id-starts-with>urn:cts:latinLit</id-starts-with>
+            </filter>
         </collection>
     </collections>
 </configuration>
