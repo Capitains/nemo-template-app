@@ -15,7 +15,8 @@ extension_nemo = configurable.nemo_class(
     chunker={
         "default": configurable.chunker
     },
-    transform=configurable.xslt_dict
+    transform=configurable.xslt_dict,
+    static_folder=configurable.statics_folder
 )
 extension_nautilus = FlaskNautilus(
     prefix="/api",

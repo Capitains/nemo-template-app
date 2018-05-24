@@ -28,3 +28,4 @@ xslt_dict = build_xslt_dict(configuration_xml, configuration_path)
 nemo_class = BuildNemoClass(configuration_xml)
 
 templates_folder = os.path.abspath(os.path.join(current_folder, "../templates"))
+statics_folder = os.path.abspath(os.path.join(current_folder, "../statics"))
