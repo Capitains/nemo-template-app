@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<?xml-model href="./configuration-schemas/corpora.rng"
+    schematypens="http://relaxng.org/ns/structure/1.0"?>
 <configuration>
-    <full-text-route>True</full-text-route>
-    <about-route>True</about-route>
+    <full-text-route>true</full-text-route>
+    <about-route>true</about-route>
     <chunking>
         <identifier-regexp level="1" level-name="Priapée {passage}">^urn:cts:latinLit:phi1103\..*$</identifier-regexp>
         <citation-system level="2" level-name="Chapitre {passage}" group-by="5">book,chapter</citation-system>
         <hardcoded identifier="">
+            <!-- Not implemented at the moment -->
             <ref id="">Exemple</ref>
         </hardcoded>
     </chunking>

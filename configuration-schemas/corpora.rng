@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <element name="configuration">
+      <interleave>
+        <optional><ref name="element_full_route" /></optional>
+        <optional><ref name="element_about_route" /></optional>
+        <optional><ref name="element_chunking" /></optional>
+        <optional><ref name="element_xslts" /></optional>
+      </interleave>
+    </element>
+  </start>
+  <define name="element_citation_system">
+    <element name="citation-system">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Look at the citation system of the text and if it matches with the text, apply the attr_auto_compute_reffs parameters
+        Example : &lt;citation-system group-by=&quot;30&quot;&gt;book,line&lt;/citation-system&gt; would apply 
+        grouping of 30 lines to text built in book-line structure
+      </documentation>
+      <ref name="attr_auto_compute_reffs" />
+      <text />
+    </element>
+  </define>
+  <define name="element_identifier_regexp">
+    <element name="identifier-regexp">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Passage grouping function applied to texts matching the regexp given as the text of the element.
+        Example : &lt;identifier-regexp group-by=&quot;5&quot;&gt;urn:cts:latinLit:.*&lt;/identifier-regexp&gt; would apply 
+          grouping of 5 passages to identifier matching the "urn:cts:latinLit.*" regexp
+      </documentation>
+      <ref name="attr_auto_compute_reffs" />
+      <text />
+    </element>
+  </define>
+  <define name="attr_auto_compute_reffs">
+    <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+      Set of attributes used by semi-automatic grouping of texts
+    </documentation>
+    <interleave>
+      <optional><ref name="attr_group_by" /></optional>
+      <ref name="attr_level" />
+      <optional><ref name="attr_level_name" /></optional>
+    </interleave>
+  </define>
+  <define name="attr_group_by">
+    <attribute name="group-by">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Number of passages that needs to be grouped together for display purpose.
+        Example : I want to show lines grouped by 15, then I set group-by="15"
+      </documentation>
+      <data type="integer"/>
+    </attribute>
+  </define>
+  <define name="attr_level">
+    <attribute name="level">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Level at which the references needs to be retrieved for display purpose.
+        Example : if a text has lines within poem within books, level=2 will retrieve Poems
+      </documentation>
+      <data type="integer"/>
+    </attribute>
+  </define>
+  <define name="attr_level_name">
+    <attribute name="level-name">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Name of the level that will be exposed for display purposes. Needs to include {passage}. 
+        Example : `Poem {passage}` will show the number of the poem
+      </documentation>
+      <data type="string"/>
+    </attribute>
+  </define>
+  <define name="attr_text_identifier">
+    <attribute name="identifier">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Identifier of the text concerned by the configuration node
+      </documentation>
+      <data type="anyURI"/>
+    </attribute>
+  </define>
+  <define name="element_full_route">
+    <element name="full-text-route">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Enable a page for each texts that will allow to see the full text instead of only passages.
+        False by default
+      </documentation>
+      <data type="boolean"/>
+    </element>
+  </define>
+  <define name="element_about_route">
+    <element name="about-route">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Activate a page to speak about your project, its licence, etc.
+      </documentation>
+      <data type="boolean"/>
+    </element>
+  </define>
+  <define name="element_chunking">
+    <element name="chunking">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Nodes in chunking configure how text will be browsed by users. 
+        Their goal is to semi-automatize or hardcode how texts' passages will be proposed, eg. by poems, by group of 30 lines, by 5 paragraphs, etc.
+      </documentation>
+      <ref name="element_identifier_regexp"/>
+      <ref name="element_citation_system"/>
+      <element name="hardcoded">
+        <attribute name="identifier"/>
+        <element name="ref">
+          <attribute name="id"/>
+          <data type="NCName"/>
+        </element>
+      </element>
+    </element>
+  </define>
+  <define name="element_xslts">
+    <element name="xslts">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Configuration for XSLTs that needs to be applied to specific texts.
+      </documentation>
+      <interleave>
+        <optional><ref name="element_xsl_default" /></optional>
+        <zeroOrMore><ref name="element_xsl" /></zeroOrMore>
+      </interleave>
+    </element>
+  </define>
+  <define name="text_xsl_path">
+    <text>
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Path to the XSLT that needs to be applied
+      </documentation>
+    </text>
+  </define>
+  <define name="element_xsl_default">
+    <element name="default">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Default XSLT to apply to texts
+      </documentation>
+      <ref name="text_xsl_path" />
+    </element>
+  </define>
+  <define name="element_xsl">
+    <element name="xsl">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        XSLT that needs to be applied to a specific text
+      </documentation>
+      <ref name="attr_text_identifier" />
+      <ref name="text_xsl_path" />
+    </element>
+  </define>
+</grammar>
