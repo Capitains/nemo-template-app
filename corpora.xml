@@ -19,15 +19,16 @@
             <identifier>general</identifier>
         </collection>
         <collection>
-            <name lang="fre">Poésie</name>
-            <name lang="eng">Poetry</name>
+            <name lang="fre">Priapées</name>
+            <name lang="eng">Priapées</name>
             <identifier>sources</identifier>
             <filter>
                 <!--
                     Not Available right Now : will need to wait Nautilus 2.0.0
                     <citation-contains>line</citation-contains>
                 -->
-                    <id-starts-with>urn:cts:latinLit</id-starts-with>
+                <!-- <id-starts-with>urn:cts:latinLit:phi1103</id-starts-with> -->
+                <in-folder>example_corpora/priapeia</in-folder>
             </filter>
         </collection>
     </collections>

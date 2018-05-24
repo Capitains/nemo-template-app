@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <full-text-route>True</full-text-route>
+    <chunking>
+        <identifier-regexp level="1" level-name="Priapée {passage}">^urn:cts:latinLit:phi1103\..*$</identifier-regexp>
+        <citation-system level="2" level-name="Chapitre {passage}" group-by="5">book,chapter</citation-system>
+        <hardcoded identifier="">
+            <ref id="">Exemple</ref>
+        </hardcoded>
+    </chunking>
+</configuration>

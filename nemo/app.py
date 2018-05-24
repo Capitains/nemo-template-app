@@ -3,17 +3,20 @@ from capitains_nautilus.flask_ext import FlaskNautilus
 
 
 from .nemo import NemoTemplate
-from . import nautilus
+from . import configurable
 
 
 app = Flask("app")
 extension_nemo = NemoTemplate(
     base_url="",
-    resolver=nautilus.resolver
+    resolver=configurable.resolver,
+    chunker={
+        "default": configurable.chunker
+    }
 )
 extension_nautilus = FlaskNautilus(
     prefix="/api",
-    resolver=nautilus.resolver
+    resolver=configurable.resolver
 )
 
 

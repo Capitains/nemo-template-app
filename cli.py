@@ -1,4 +1,4 @@
-from nemo.app import app, nautilus
+from nemo.app import app, configurable
 import click
 
 
@@ -10,19 +10,20 @@ def nemo_template_cli():
 
 @nemo_template_cli.command("cache-clear")
 def parse():
-    nautilus.resolver.cache.clear()
+    configurable.resolver.cache.clear()
 
 
 @nemo_template_cli.command("cache-parse")
 def parse():
-    nautilus.resolver.clear()
-    nautilus.resolver.parse()
+    configurable.resolver.cache.clear()
+    configurable.resolver.parse()
 
 
 @nemo_template_cli.command("dev-run")
 @click.option('--port', '-p', default=5000, help='The port to bind to.')
 def dev_run(port=5000):
     """ This command should only be run for development """
+    configurable.resolver.cache.clear()
     app.debug = True
     app.run(port=port)
 
