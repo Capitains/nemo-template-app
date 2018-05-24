@@ -2,14 +2,16 @@ from flask import Flask
 from capitains_nautilus.flask_ext import FlaskNautilus
 
 
-from .nemo import NemoTemplate
 from . import configurable
 
 
 app = Flask("app")
-extension_nemo = NemoTemplate(
+
+
+extension_nemo = configurable.nemo_class(
     base_url="",
     resolver=configurable.resolver,
+    templates={"main": configurable.templates_folder},
     chunker={
         "default": configurable.chunker
     }

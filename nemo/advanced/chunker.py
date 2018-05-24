@@ -4,9 +4,6 @@ from collections import namedtuple
 
 from flask_nemo.chunker import level_grouper
 
-from .utils import relative_folder
-
-
 RegExpChunker = namedtuple(
     "RegExpChunker",
     ["regexp", "config"]
@@ -33,9 +30,11 @@ def get_citation_scheme(text):
 
 
 def build_chunker(configuration_file):
+    """ XML configuration file
 
-    with open(configuration_file) as xml_file:
-        xml = etree.parse(xml_file)
+    :param xml:
+    :return:
+    """
 
     identifier_regexps = [
         RegExpChunker(
@@ -46,7 +45,7 @@ def build_chunker(configuration_file):
                 int(regexp_node.get("group-by", 1))
             )
         )
-        for regexp_node in xml.xpath("//identifier-regexp")
+        for regexp_node in configuration_file.xpath("//identifier-regexp")
     ]
     citation_sytems = [
         CitationChunker(
@@ -57,7 +56,7 @@ def build_chunker(configuration_file):
                 int(citation_node.get("group-by", 1))
             )
         )
-        for citation_node in xml.xpath("//citation-system")
+        for citation_node in configuration_file.xpath("//citation-system")
     ]
 
     def chunker(text, getreffs):
@@ -85,7 +84,6 @@ def build_chunker(configuration_file):
         else:
             reffs = getreffs(level=config.level)
 
-
         reffs = [
             (
                 reff,
@@ -94,7 +92,6 @@ def build_chunker(configuration_file):
             for reff in reffs
         ]
 
-        print(reffs)
         return reffs
 
     return chunker
