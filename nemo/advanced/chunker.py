@@ -45,7 +45,7 @@ def build_chunker(configuration_file):
                 int(regexp_node.get("group-by", 1))
             )
         )
-        for regexp_node in configuration_file.xpath("//identifier-regexp")
+        for regexp_node in configuration_file.xpath(".//identifier-regexp")
     ]
     citation_sytems = [
         CitationChunker(
@@ -56,8 +56,24 @@ def build_chunker(configuration_file):
                 int(citation_node.get("group-by", 1))
             )
         )
-        for citation_node in configuration_file.xpath("//citation-system")
+        for citation_node in configuration_file.xpath(".//citation-system")
     ]
+    hardcoded_systems = {
+        citation_node.get("identifier"): [
+            (
+                ref_node.get(
+                    "id",
+                    "{}-{}".format(
+                        ref_node.get("start"),
+                        ref_node.get("end")
+                    )
+                ),
+                ref_node.text
+            )
+            for ref_node in citation_node.xpath("./ref")
+        ]
+        for citation_node in configuration_file.xpath(".//hardcoded")
+    }
 
     def chunker(text, getreffs):
         # We build a the citation type
@@ -65,6 +81,9 @@ def build_chunker(configuration_file):
         identifier = str(text.id)
         config = ChunkerConfig(1, "{passage}", 1)
         changed_config = False
+
+        if identifier in hardcoded_systems:
+            return hardcoded_systems[identifier]
 
         for identifier_regexp in identifier_regexps:
             if identifier_regexp.regexp.match(identifier):

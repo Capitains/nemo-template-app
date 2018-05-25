@@ -102,13 +102,53 @@
       </documentation>
       <ref name="element_identifier_regexp"/>
       <ref name="element_citation_system"/>
-      <element name="hardcoded">
-        <attribute name="identifier"/>
-        <element name="ref">
-          <attribute name="id"/>
-          <data type="NCName"/>
-        </element>
-      </element>
+      <ref name="element_hardcoded" />
+    </element>
+  </define>
+  <define name="element_hardcoded">
+    <element name="hardcoded">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Manually curated passages.
+        This can be pretty useful for presenting epics or plays in a way that would not break dialogs. 
+      </documentation>
+      <ref name="attr_text_identifier" />
+      <oneOrMore>
+        <ref name="element_ref" />        
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="element_ref">
+    <element name="ref">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Reference that must be showed to the user
+      </documentation>
+      <choice>
+        <attribute name="id">
+          <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+            Identifier of the passage
+          </documentation>
+          <data type="anyURI"/>
+        </attribute>
+        <interleave>
+          <attribute name="start">
+            <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+              Starting identifier of the passage
+            </documentation>
+            <data type="anyURI"/>
+          </attribute>
+          <attribute name="end">
+           <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+             Ending identifier of the passage
+           </documentation>
+            <data type="anyURI"/>
+          </attribute>
+        </interleave>
+      </choice>
+      <text>
+        <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+          Human readable name of the passage
+        </documentation>
+      </text>
     </element>
   </define>
   <define name="element_xslts">
