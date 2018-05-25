@@ -22,6 +22,7 @@
     </full-text-only>
     <xslts>
         <default>xsl/default.xsl</default>
+        <xsl identifier="urn:cts:pompei:cil004-01700.01776.manfred-lat1">xsl/inscription.xsl</xsl>
         <xsl identifier="urn:cts:aperire:delver.init.opp-lat1">xsl/copy.xsl</xsl>
     </xslts>
     <additional-pages>
