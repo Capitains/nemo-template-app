@@ -16,3 +16,11 @@
     {% endfor %}
 </ul>
 {% endif %}
+{% if has_about_route %}
+<header>
+    <span class="content">Project</span>
+</header>
+<ul class="menu">
+    <li><a href="{{url_for(".r_about")}}">About</a></li>
+</ul>
+{% endif %}

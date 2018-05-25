@@ -4,7 +4,7 @@
 <configuration>
     <cache-folder>./cache_folder</cache-folder>
     <corpora>
-        <corpus>example_corpora/priapeia</corpus>
+        <corpus>example_corpora/priapees</corpus>
         <corpus>example_corpora/other</corpus>
         <corpus>example_corpora/aperire</corpus>
     </corpora>

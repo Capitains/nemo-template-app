@@ -19,6 +19,9 @@
                 [{{coll.lang}}] {{ coll.label }}<br />
                 <a class="card-link" href="{{url_for('.r_references_semantic', objectId=coll.id, semantic=coll.semantic)}}">Browse</a>
                 <a class="card-link" href="{{url_for('.r_first_passage', objectId=coll.id)}}">Read</a>
+                {%- if has_full_text_route %}
+                <a class="card-link" href="{{url_for('.r_first_passage', objectId=coll.id)}}">Complete Text</a>
+                {% endif -%}
             </li>
             {% else %}
             <li class="card">

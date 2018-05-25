@@ -13,6 +13,23 @@ class NemoTemplate(Nemo):
     Enhance it or modify it to fit your needs !
 
     """
+    def __init__(self, *args, **kwargs):
+
+        self.has_about_route = kwargs.get("about_route", False)
+        if self.has_about_route:
+            del kwargs["about_route"]
+
+        self.has_full_text_route = kwargs.get("full_text_route", False)
+        if self.has_full_text_route:
+            del kwargs["full_text_route"]
+
+        super(NemoTemplate, self).__init__(*args, **kwargs)
+
+    def render(self, template, **kwargs):
+        kwargs["has_about_route"] = self.has_about_route
+        kwargs["has_full_text_route"] = self.has_full_text_route
+        return super(NemoTemplate, self).render(template, **kwargs)
+
     def r_full_text(self, objectId, lang=None):
         """ Retrieve the text of the passage
         :param objectId: Collection identifier
@@ -56,12 +73,14 @@ class NemoTemplate(Nemo):
         }
 
     def r_about(self):
+        """ An about page
+        """
         return {
             "template": "main::about.html"
         }
 
 
-def BuildNemoClass(configuration_file):
+def build_nemo(configuration_file, *args, **kwargs):
     """
 
     :param configuration_file:
@@ -72,9 +91,12 @@ def BuildNemoClass(configuration_file):
         if add_route_full_text.lower() == "true":
             NemoTemplate.ROUTES += [("/text/<objectId>/complete", "r_full_text", ["GET"])]
             NemoTemplate.CACHED += ["r_full_text"]
+            kwargs["full_text_route"] = True
 
     for add_route_for_about in configuration_file.xpath("//about-route/text()"):
         if add_route_for_about.lower() == "true":
             NemoTemplate.ROUTES += [("/about", "r_about", ["GET"])]
+            NemoTemplate.CACHED += ["r_about"]
+            kwargs["about_route"] = True
 
-    return NemoTemplate
+    return NemoTemplate(*args, **kwargs)
