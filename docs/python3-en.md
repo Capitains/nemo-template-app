@@ -24,12 +24,6 @@ __From within the directory containing your local git clone of this tutorial's r
 
 ```pip install -r requirements.txt```
 
-Follwed by
-
-```ipython notebook --matplotlib=inline```
-
-If all goes well, that should open your browser on the page http://127.0.0.1:8888/ which is named IP[y]: Notebook.
-
 ### Linux (Ubuntu/Debian)
 
 __N.B. you will need administrator rights to follow these instructions.__
@@ -55,11 +49,7 @@ From within the same terminal and directory now type:
 
 ```pip install -r requirements.txt```
 
-This will install the packages necessary for this tutorial. Once these are installed, you should be able to type:
-
-```ipython3 notebook```
-
-If all goes well that should open your browser to the page http://127.0.0.1:8888/ which is named IP[y]: Notebook.
+This will install the packages necessary for this tutorial. 
 
 ## Contributors
 
@@ -72,6 +62,8 @@ If all goes well that should open your browser to the page http://127.0.0.1:8888
 * Matt Munson
 
 * Thibault Clérice
+
+* Bridget Almas
 
 
 
