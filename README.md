@@ -58,12 +58,12 @@ You can find some example of small Capitains corpora at [Lasciva Roma/Additional
 Typically, the `corpora.xml` file is divided into three main nodes which we'll present here but you can find a more
 documented schema [here](configuration-schemas/corpora.rng).
 
-#### Setting up cache
+##### Setting up cache
 
 The cache folder node (`<cache-folder>`) is a tool to specify the directory that you are gonna use to cache processed informations. This allows to
 speed the application by an order of magnitude when the corpora are large.
 
-#### Adding corpora
+##### Adding corpora
 
 The `<corpora>` nodes contains the list of directories containing the texts you want to serve.
 
@@ -79,12 +79,12 @@ The `<corpora>` nodes contains the list of directories containing the texts you 
 Two corpus are imported, from both `example_corpora/priapees` and `example_corpora/other` directories.
 
 
-#### Creating editorial collections
+##### Creating editorial collections
 
 The `<collections>` nodes contains editorial collection that can be used to make better entry point for the
 readers. This can overcome the lack of editorialization or the aggregation of multiple corpora.
 
-##### Setting up texts so that they are registered in a specific collection
+###### Setting up texts so that they are registered in a specific collection
 
 While most nodes can be straightforward with the documentation, the `<filters>` one can be somewhat complicated.
 Let's see an example :
