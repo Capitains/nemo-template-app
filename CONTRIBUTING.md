@@ -21,6 +21,12 @@ Set up your machine:
 pip install -r requirements.txt
 ```
 
+And run the script in dev mode
+
+```bash
+python cli.py dev-run
+```
+
 Push to your fork and [submit a pull request][pr].
 
 [pr]: https://github.com/capitains/nemo-template-app/compare/
