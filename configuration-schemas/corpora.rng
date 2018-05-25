@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <element name="configuration">
+      <interleave>
+        <optional><ref name="elem_cache_folder" /></optional>
+        <ref name="elem_corpora" />
+        <ref name="elem_collections" />
+      </interleave>
+    </element>
+  </start>
+  <define name="elem_cache_folder">
+    <element name="cache-folder">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Cache Folder is used to cache data about the corpus to enhance most XML process speed.
+      </documentation>
+      <text>
+        <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+          Path where the cache is save
+        </documentation>
+      </text>
+    </element>
+  </define>
+  <define name="elem_corpus">
+    <element name="corpus">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        One CapiTainS corpus served by the application
+      </documentation>
+      <text>
+        <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+          Path to the CapiTainS corpus contaning the data subfolder.
+        </documentation>
+      </text>
+    </element>
+  </define>
+  <define name="elem_corpora">
+    <element name="corpora">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Set of corpora that will be served by the application.
+      </documentation>
+      <oneOrMore>
+        <ref name="elem_corpus" />
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="elem_collections">
+    <element name="collections">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Element contaning virtual collections that serve as entry points for user. 
+        Useful to editorialize multiple corpora.
+      </documentation>
+      <ref name="elem_default_collection" />
+      <zeroOrMore>
+        <ref name="elem_collection" />
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="attr_default">
+      <attribute name="default">
+        <data type="boolean"/>
+      </attribute>
+  </define>
+  <define name="elem_default_collection">
+    <element name="collection">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Default collection to which text should be attached to if there is no other collections found.
+      </documentation>
+        <ref name="attr_default" />
+        <ref name="elem_set_collection" />
+    </element>
+  </define>
+  <define name="elem_set_collection">
+    <interleave>
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Set of nodes that can be found or should be found in 
+      </documentation>
+      <oneOrMore>
+        <ref name="elem_collection_name" />
+      </oneOrMore>
+      <ref name="elem_collection_identifier" />
+      <optional>
+        <ref name="elem_filter" />
+      </optional>
+    </interleave>
+  </define>
+  <define name="elem_collection_identifier">
+    <element name="identifier">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Identifier of the collection
+      </documentation>
+      <data type="anyURI"/>
+    </element>
+  </define>
+  <define name="elem_collection_name">
+    <element name="name">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Name of the collection to be shown
+      </documentation>
+      <attribute name="lang">
+        <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+          Language code. We recommend ISO 639-3 at the moment, cf. https://en.wikipedia.org/wiki/List_of_ISO_639-3_codes
+          eg. eng, fre, lat, ger...
+        </documentation>
+        <data type="language"/>
+      </attribute>
+      <text/>
+    </element>
+  </define>
+  <define name="elem_collection_folder">
+    <element name="folder">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Filter that is based on a folder containing the text. Can be a folder up to the text group. The folder must be relative to the current file.
+      </documentation>
+      <data type="anyURI" />
+    </element>
+  </define>
+  <define name="elem_collection_regexp">
+    <element name="id-starts-with">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Filter that is based on a folder containing the text. Can be a folder up to the text group. The folder must be relative to the current file.
+      </documentation>
+      <data type="anyURI" />
+    </element>
+  </define>
+  <define name="elem_filter">
+    <element name="filters">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Set of filters that will be applied to store textgroups into the current collection.
+        Each filter type behave as a OR (either in directory1 or in directory2) but categories behaves as AND : "in directory1" AND "identifier starts with 123" 
+      </documentation>
+      <interleave>
+        <zeroOrMore><ref name="elem_collection_folder" /></zeroOrMore>
+        <zeroOrMore><ref name="elem_collection_regexp" /></zeroOrMore>
+      </interleave>
+    </element>
+  </define>
+  <define name="elem_collection">
+    <element name="collection">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Element defining a virtual collection that will serve as editorial entry point on the application.
+        Useful to subcategorize corpora.
+      </documentation>
+      <ref name="elem_set_collection" />
+    </element>
+  </define>
+</grammar>

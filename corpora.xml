@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<?xml-model href="./configuration-schemas/corpora.rng"
+    schematypens="http://relaxng.org/ns/structure/1.0"?>
 <configuration>
     <cache-folder>./cache_folder</cache-folder>
     <corpora>
-        <!-- You can simply add corpora here that by adding nodes like the following :
-
-        <corpus>data/priapeia</corpus>
-
-        Be careful in how you write the path : it should be the relative path from the current folder, or an
-        absolute path.
-        -->
         <corpus>example_corpora/priapeia</corpus>
         <corpus>example_corpora/other</corpus>
         <corpus>example_corpora/aperire</corpus>
@@ -23,17 +18,17 @@
             <name lang="fre">Ressource pour l'enseignement</name>
             <name lang="eng">Teaching Resource</name>
             <identifier>teaching</identifier>
-            <filter>
+            <filters>
                 <folder>example_corpora/aperire</folder>
-            </filter>
+            </filters>
         </collection>
         <collection>
             <name lang="fre">Priapées</name>
             <name lang="eng">Priapées</name>
             <identifier>sources</identifier>
-            <filter>
+            <filters>
                 <id-starts-with>urn:cts:latinLit:phi1103</id-starts-with>
-            </filter>
+            </filters>
         </collection>
     </collections>
 </configuration>

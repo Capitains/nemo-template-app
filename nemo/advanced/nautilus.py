@@ -90,7 +90,7 @@ def build_resolver(configuration_file):
             current_collection.set_label(name.text, name.get("lang"))
 
         # We look at dispatching filters in the collection
-        for filters in collection.xpath("./filter"):
+        for filters in collection.xpath("./filters"):
             # We register prefix filters
             prefix_filters = []
             for prefix in filters.xpath("./id-starts-with/text()"):
