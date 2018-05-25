@@ -11,7 +11,10 @@ app = Flask("app")
 extension_nemo = configurable.nemo_class(
     base_url="",
     resolver=configurable.resolver,
-    templates={"main": configurable.templates_folder},
+    templates={
+        "main": configurable.templates_folder,
+        "additional": configurable.templates_folder_additional
+    },
     chunker={
         "default": configurable.chunker
     },

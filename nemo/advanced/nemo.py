@@ -17,6 +17,7 @@ class NemoTemplate(Nemo):
     Enhance it or modify it to fit your needs !
 
     """
+
     def __init__(self, *args, **kwargs):
 
         self.has_about_route = kwargs.get("about_route", False)
@@ -35,6 +36,10 @@ class NemoTemplate(Nemo):
         if len(self.full_texts_only) > 0:
             del kwargs["full_texts_only"]
 
+        self.additional_pages = kwargs.get("additional_pages", {})
+        if len(self.additional_pages) > 0:
+            del kwargs["additional_pages"]
+
         super(NemoTemplate, self).__init__(*args, **kwargs)
 
     def render(self, template, **kwargs):
@@ -42,6 +47,7 @@ class NemoTemplate(Nemo):
         kwargs["has_full_text_route"] = self.has_full_text_route
         kwargs["disable_reffs"] = self.disable_reffs
         kwargs["full_texts_only"] = self.full_texts_only
+        kwargs["additional_pages"] = self.additional_pages
         return super(NemoTemplate, self).render(template, **kwargs)
 
     def check_allowed_partial_text(self, objectId):
@@ -109,6 +115,13 @@ class NemoTemplate(Nemo):
             "template": "main::about.html"
         }
 
+    def r_page(self, page_id):
+        if page_id not in self.additional_pages:
+            raise Error404("This page does not exist or was removed.")
+        return {
+            "template": "additional::{}".format(self.additional_pages[page_id]["template"])
+        }
+
     def page_not_found(self, e):
         kwargs = {}
         kwargs["lang"] = self.get_locale()
@@ -137,6 +150,18 @@ def build_nemo(configuration_file, *args, **kwargs):
                 kwargs["full_texts_only"] = list(
                     text_only_node.xpath("./id/text()")
                 )
+
+    pages = list(configuration_file.xpath("//additional-pages[1]"))
+    if len(pages):
+        NemoTemplate.ROUTES += [("/page/<path:page_id>", "r_page", ["GET"])]
+        NemoTemplate.CACHED += ["r_page"]
+        kwargs["additional_pages"] = {
+            page.get("id"): {
+                "template": page.get("template"),
+                "title": page.xpath("./link-title[1]/text()")[0]
+            }
+            for page in pages[0].xpath("./page")
+        }
 
     for add_route_for_about in configuration_file.xpath("//about-route[1]/text()"):
         if add_route_for_about.lower() == "true":

@@ -24,4 +24,9 @@
         <default>xsl/default.xsl</default>
         <xsl identifier="urn:cts:aperire:delver.init.opp-lat1">xsl/copy.xsl</xsl>
     </xslts>
+    <additional-pages>
+        <page id="credits" template="credits.html">
+            <link-title>Credits</link-title>
+        </page>
+    </additional-pages>
 </configuration>

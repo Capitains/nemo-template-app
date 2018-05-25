@@ -8,6 +8,7 @@
         <optional><ref name="element_chunking" /></optional>
         <optional><ref name="element_xslts" /></optional>
         <optional><ref name="element_full_text_only" /></optional>
+        <optional><ref name="element_additional_pages" /></optional>
       </interleave>
     </element>
   </start>
@@ -211,6 +212,44 @@
         ID of a text that should only be readable as a full-text
       </documentation>
       <data type="anyURI" />
+    </element>
+  </define>
+  <define name="element_page">
+    <element name="page">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Static Page to be added to the available pages of the website
+      </documentation>
+      <interleave>
+        <attribute name="id">
+          <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+            URI used by the current page. The @id value will be append to /page/. Eg. 
+            &#x3C;page id=&#x22;credits&#x22; ...&#x3E;...&#x3C;/page&#x3E; will result in /page/credits
+          </documentation>
+          <data type="anyURI" />
+        </attribute>
+        <attribute name="template">
+          <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+            Name of template to be used. The template should be found in the ./templates/additional-pages/ folder.
+          </documentation>
+          <data type="anyURI" />
+        </attribute>
+      </interleave>
+      <element name="link-title">
+        <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+          Title of the page to show in links.
+        </documentation>
+        <text/>
+      </element>
+    </element>
+  </define>
+  <define name="element_additional_pages">
+    <element name="additional-pages">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        List of static pages that can be provided with complete templates
+      </documentation>
+      <oneOrMore>
+        <ref name="element_page" />
+      </oneOrMore>
     </element>
   </define>
 </grammar>

@@ -31,7 +31,8 @@ def nemo_class(*args, **kwargs):
     return build_nemo(configuration_xml, *args, **kwargs)
 
 
-templates_folder = os.path.abspath(os.path.join(current_folder, "../templates"))
+templates_folder = os.path.abspath(os.path.join(current_folder, "../templates/main"))
+templates_folder_additional = os.path.abspath(os.path.join(current_folder, "../templates/additional-pages"))
 statics_folder = os.path.abspath(os.path.join(current_folder, "../statics"))
 
 

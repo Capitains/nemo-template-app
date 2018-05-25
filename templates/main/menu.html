@@ -22,5 +22,8 @@
 </header>
 <ul class="menu">
     <li><a href="{{url_for(".r_about")}}">About</a></li>
+    {%- for page, page_info in additional_pages.items() %}
+        <li><a href="{{url_for(".r_page", page_id=page)}}">{{page_info["title"]}}</a></li>
+    {% endfor -%}
 </ul>
 {% endif %}
