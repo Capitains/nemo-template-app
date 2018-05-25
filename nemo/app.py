@@ -26,3 +26,5 @@ extension_nautilus = FlaskNautilus(
 
 extension_nautilus.init_app(app)
 extension_nemo.init_app(app)
+
+configurable.instantiate_errors(app, extension_nemo)

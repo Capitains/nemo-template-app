@@ -1,0 +1,27 @@
+<work groupUrn="urn:cts:pompei:cil004-01700" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:cpt="http://purl.org/capitains/ns/1.0#" xmlns:skos="http://www.w3.org/2004/02/skos/core#" xmlns:dct="http://purl.org/dc/terms/" xml:lang="None" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dts="http://w3id.org/dts-ontology/" xmlns="http://chs.harvard.edu/xmlns/cts" xmlns:saws="http://purl.org/saws/ontology#" urn="urn:cts:pompei:cil004-01700.01776">
+<title xml:lang="eng">01776</title>
+<cpt:structured-metadata>
+<saws:identifier >www.trismegistos.org/text/524563</saws:identifier>
+<rdfs:label xml:lang="eng">01776</rdfs:label>
+<saws:isLocatedAt >http://www.trismegistos.org/place/2788</saws:isLocatedAt>
+<dc:identifier >EDCS-28800351</dc:identifier>
+<skos:prefLabel xml:lang="eng">01776</skos:prefLabel>
+<dc:identifier > GraffPomp 00699</dc:identifier>
+<saws:isLocatedAt >Pompei</saws:isLocatedAt>
+<saws:isLocatedAt >long:14.4891718;lat:40.7498815</saws:isLocatedAt>
+</cpt:structured-metadata>
+<edition urn="urn:cts:pompei:cil004-01700.01776.manfred-lat1" xml:lang="lat" workUrn="urn:cts:pompei:cil004-01700.01776">
+<label xml:lang="eng">01776</label>
+<description xml:lang="None">Automatically converted from Manfred Klaus database</description>
+<cpt:structured-metadata>
+<dct:contributor >Thibault Clérice</dct:contributor>
+<dc:language >lat</dc:language>
+<dc:format >text/xml</dc:format>
+<dct:contributor >Manfred Claus</dct:contributor>
+<dct:source >http://www.worldcat.org/oclc/459220842</dct:source>
+<dct:provenance >http://manfredclauss.de/gb/index.html</dct:provenance>
+<skos:prefLabel xml:lang="eng">01776</skos:prefLabel>
+<rdfs:label xml:lang="eng">01776</rdfs:label>
+</cpt:structured-metadata>
+</edition>
+</work>

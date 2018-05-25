@@ -1,10 +1,14 @@
 from lxml import etree
 
+from flask import render_template
 from flask_nemo import Nemo
 from flask import Markup, redirect, url_for
 from MyCapytain.resources.prototypes.cts.inventory import CtsWorkMetadata, CtsEditionMetadata
 from MyCapytain.errors import UnknownCollection
 from MyCapytain.common.constants import Mimetypes
+
+
+from .errors import Error404
 
 
 class NemoTemplate(Nemo):
@@ -23,12 +27,38 @@ class NemoTemplate(Nemo):
         if self.has_full_text_route:
             del kwargs["full_text_route"]
 
+        self.disable_reffs = kwargs.get("disable_browse_reffs_and_passage", False)
+        if self.disable_reffs:
+            del kwargs["disable_browse_reffs_and_passage"]
+
+        self.full_texts_only = kwargs.get("full_texts_only", [])
+        if len(self.full_texts_only) > 0:
+            del kwargs["full_texts_only"]
+
         super(NemoTemplate, self).__init__(*args, **kwargs)
 
     def render(self, template, **kwargs):
         kwargs["has_about_route"] = self.has_about_route
         kwargs["has_full_text_route"] = self.has_full_text_route
+        kwargs["disable_reffs"] = self.disable_reffs
+        kwargs["full_texts_only"] = self.full_texts_only
         return super(NemoTemplate, self).render(template, **kwargs)
+
+    def check_allowed_partial_text(self, objectId):
+        if self.disable_reffs or objectId in self.full_texts_only:
+            raise Error404("This text can't be browsed this way.")
+
+    def r_first_passage(self, objectId):
+        self.check_allowed_partial_text(objectId)
+        return super(NemoTemplate, self).r_first_passage(objectId)
+
+    def r_references(self, objectId, lang=None):
+        self.check_allowed_partial_text(objectId)
+        return super(NemoTemplate, self).r_references(objectId, lang)
+
+    def r_passage(self, objectId, subreference, lang=None):
+        self.check_allowed_partial_text(objectId)
+        return super(NemoTemplate, self).r_passage(objectId, subreference, lang)
 
     def r_full_text(self, objectId, lang=None):
         """ Retrieve the text of the passage
@@ -79,6 +109,13 @@ class NemoTemplate(Nemo):
             "template": "main::about.html"
         }
 
+    def page_not_found(self, e):
+        kwargs = {}
+        kwargs["lang"] = self.get_locale()
+        kwargs["assets"] = self.assets
+        kwargs["main_collections"] = self.main_collections(kwargs["lang"])
+        return render_template("main::404.html", message=e.message, **kwargs), 404
+
 
 def build_nemo(configuration_file, *args, **kwargs):
     """
@@ -87,13 +124,21 @@ def build_nemo(configuration_file, *args, **kwargs):
     :return: Nemo class with registered option
     :rtype: class
     """
-    for add_route_full_text in configuration_file.xpath("//full-text-route/text()"):
+    for add_route_full_text in configuration_file.xpath("//full-text-route[1]/text()"):
         if add_route_full_text.lower() == "true":
             NemoTemplate.ROUTES += [("/text/<objectId>/complete", "r_full_text", ["GET"])]
             NemoTemplate.CACHED += ["r_full_text"]
             kwargs["full_text_route"] = True
 
-    for add_route_for_about in configuration_file.xpath("//about-route/text()"):
+        for text_only_node in configuration_file.xpath("//full-text-only[1]"):
+            if text_only_node.get("all", "false").lower() == "true":
+                kwargs["disable_browse_reffs_and_passage"] = True
+            else:
+                kwargs["full_texts_only"] = list(
+                    text_only_node.xpath("./id/text()")
+                )
+
+    for add_route_for_about in configuration_file.xpath("//about-route[1]/text()"):
         if add_route_for_about.lower() == "true":
             NemoTemplate.ROUTES += [("/about", "r_about", ["GET"])]
             NemoTemplate.CACHED += ["r_about"]

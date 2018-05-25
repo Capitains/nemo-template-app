@@ -7,6 +7,7 @@
         <corpus>example_corpora/priapees</corpus>
         <corpus>example_corpora/other</corpus>
         <corpus>example_corpora/aperire</corpus>
+        <corpus>example_corpora/inscriptions</corpus>
     </corpora>
     <collections>
         <collection default="true">

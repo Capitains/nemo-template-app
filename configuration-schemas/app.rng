@@ -7,6 +7,7 @@
         <optional><ref name="element_about_route" /></optional>
         <optional><ref name="element_chunking" /></optional>
         <optional><ref name="element_xslts" /></optional>
+        <optional><ref name="element_full_text_only" /></optional>
       </interleave>
     </element>
   </start>
@@ -184,6 +185,32 @@
       </documentation>
       <ref name="attr_text_identifier" />
       <ref name="text_xsl_path" />
+    </element>
+  </define>
+  <define name="element_full_text_only">
+    <element name="full-text-only">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        Set-up specific or all texts to not be readable as passages (useful for collections of short texts) 
+      </documentation>
+      <choice>
+        <attribute name="all">
+          <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+            If this parameter is set to true, text will only be readable as full texts.
+          </documentation>
+          <value>true</value>
+        </attribute>
+        <oneOrMore>
+          <ref name="element_text_id" />
+        </oneOrMore>
+      </choice>
+    </element>
+  </define>
+  <define name="element_text_id">
+    <element name="id">
+      <documentation xmlns="http://relaxng.org/ns/compatibility/annotations/1.0">
+        ID of a text that should only be readable as a full-text
+      </documentation>
+      <data type="anyURI" />
     </element>
   </define>
 </grammar>

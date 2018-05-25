@@ -6,6 +6,7 @@ from .advanced.nautilus import build_resolver
 from .advanced.chunker import build_chunker
 from .advanced.nemo import build_nemo
 from .advanced.xslts import build_xslt_dict
+from .advanced.errors import Error404
 
 
 current_folder = os.path.dirname(__file__)
@@ -32,3 +33,9 @@ def nemo_class(*args, **kwargs):
 
 templates_folder = os.path.abspath(os.path.join(current_folder, "../templates"))
 statics_folder = os.path.abspath(os.path.join(current_folder, "../statics"))
+
+
+def instantiate_errors(app, nemo):
+    @app.errorhandler(Error404)
+    def error_handler(e):
+        return nemo.page_not_found(e)

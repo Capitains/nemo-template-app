@@ -8,7 +8,6 @@
         <identifier-regexp level="1" level-name="Priapée {passage}">^urn:cts:latinLit:phi1103\..*$</identifier-regexp>
         <citation-system level="2" level-name="Chapitre {passage}" group-by="5">book,chapter</citation-system>
         <hardcoded identifier="urn:cts:aperire:delver.init.opp-lat1">
-            <ref id="1">Leçon 1</ref>
             <ref start="2" end="3">Leçon 2 et 3</ref>
             <ref id="4">Leçon 4</ref>
             <ref id="5">Leçon 5</ref>
@@ -18,6 +17,9 @@
             <ref id="9">Leçon 9</ref>
         </hardcoded>
     </chunking>
+    <full-text-only>
+        <id>urn:cts:pompei:cil004-01700.01776.manfred-lat1</id>
+    </full-text-only>
     <xslts>
         <default>xsl/default.xsl</default>
         <xsl identifier="urn:cts:aperire:delver.init.opp-lat1">xsl/copy.xsl</xsl>
