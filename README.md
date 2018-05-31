@@ -33,7 +33,8 @@ to put it simply, your text should be citable by some logical units which makes 
 ### Note about the repository
 
 The current application is in a working state and can be run as a demo. This application can only be run on Unix machines
-(Linux and MacOS) : you'll need to install python3. There is a [French tutorial](docs/python3-fr.md).
+(Linux and MacOS) : you'll need to install python3. There is a [French tutorial](docs/python3-fr.md) and
+ [English tutorial](docs/python3-en.md).
 See [CONTRIBUTING.md](CONTRIBUTING.md) for more advises on how to do the
 installations specific to the current repository.
 
