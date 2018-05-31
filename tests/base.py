@@ -1,7 +1,8 @@
 from unittest import TestCase
-import os.path
+import os
 from lxml import objectify, etree
-
+import shutil
+from MyCapytain.common.constants import get_graph
 
 class CorporaConfig(object):
     def __init__(
@@ -79,18 +80,93 @@ class CorporaConfig(object):
 
 class BaseTest(TestCase):
     def setUp(self):
-        self.app_xml = os.path.abspath(
+        self.origin_app_xml = self.app_xml = os.path.abspath(
             os.path.join(
                 os.path.dirname(__file__),
                 "..", "app.xml"
             )
         )
-        self.corpora_xml = os.path.abspath(
+        self.origin_corpora_xml = self.corpora_xml = os.path.abspath(
             os.path.join(
                 os.path.dirname(__file__),
                 "..", "corpora.xml"
             )
         )
+
+        self.default_app_xml = os.path.abspath(
+            os.path.join(
+                os.path.dirname(__file__),
+                "test_data", "default_configs", "app.xml"
+            )
+        )
+        self.default_corpora_xml = os.path.abspath(
+            os.path.join(
+                os.path.dirname(__file__),
+                "test_data", "default_configs", "corpora.xml"
+            )
+        )
+
+        self.origin_corpora_xml = self.corpora_xml = os.path.abspath(
+            os.path.join(
+                os.path.dirname(__file__),
+                "..", "corpora.xml"
+            )
+        )
+
+        self.origin_app_xml += ".bak"
+        self.origin_corpora_xml += ".bak"
+        shutil.copy2(self.app_xml, self.origin_app_xml)
+        shutil.copy2(self.corpora_xml, self.origin_corpora_xml)
+
+        shutil.copy2(self.default_app_xml, self.app_xml)
+        shutil.copy2(self.default_corpora_xml, self.corpora_xml)
+
+        self.client = None
+        self.nemo = None
+        self.nautilus = None
+
+    def tearDown(self):
+        shutil.copy2(self.origin_app_xml, self.app_xml)
+        shutil.copy2(self.origin_corpora_xml, self.corpora_xml)
+        os.remove(self.origin_app_xml)
+        os.remove(self.origin_corpora_xml)
+
+        if self.client:
+            del self.client
+
+        if self.nemo or self.nautilus:
+            get_graph().remove((None, None, None))
+
+            if self.nemo:
+                del self.nemo
+            if self.nautilus:
+                del self.nautilus
+
+    def create_corpora(self, cache_folder="./cache_folder", corpora=None):
+        return CorporaConfig(cache_folder, corpora)
+
+    def write_corpora_config(self, config):
+        """ Write the configuration app
+
+        :param config: Configuration for corpora
+        :type config: CorporaConfig
+        """
+        with open(self.corpora_xml, "w") as f:
+            f.write(config.xml())
+
+    def create_app(self):
+        """ Creates the app and set it to run
+
+        :return: Client, Nemo, Nautilus
+        :rtype: (FlaskClient, flask_nemo.Nemo, capitains_nautilus.flask_ext.FlaskNautilus)
+        """
+        from nemo.app import app, extension_nemo, extension_nautilus
+
+        self.client = app.app.test_client()
+        self.nemo = extension_nemo
+        self.nautilus = extension_nautilus
+
+        return self.client, self.nemo, self.nautilus
 
     def withConfig(self, app_xml, corpora_xml):
         """ Loads the following config

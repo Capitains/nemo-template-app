@@ -1,0 +1,16 @@
+language: python
+python:
+  - "3.6"
+
+# command to install dependencies
+install:
+    - pip install -r requirements.txt
+    - pip install nose
+    - pip install coveralls
+
+# command to run tests
+script:
+    - nosetests tests/** --verbose --with-coverage --cover-package=nemo;
+
+after_success:
+    - coveralls

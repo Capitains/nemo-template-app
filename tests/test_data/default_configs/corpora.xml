@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-model href="./configuration-schemas/corpora.rng"
+    schematypens="http://relaxng.org/ns/structure/1.0"?>
+<configuration>
+    <cache-folder>./cache_folder</cache-folder>
+    <corpora>
+        <corpus>example_corpora/priapees</corpus>
+        <corpus>example_corpora/other</corpus>
+        <corpus>example_corpora/aperire</corpus>
+        <corpus>example_corpora/inscriptions</corpus>
+    </corpora>
+    <collections>
+        <collection default="true">
+            <name lang="fre">Collection générale</name>
+            <name lang="eng">General Collection</name>
+            <identifier>general</identifier>
+        </collection>
+        <collection>
+            <name lang="fre">Ressource pour l'enseignement</name>
+            <name lang="eng">Teaching Resource</name>
+            <identifier>teaching</identifier>
+            <filters>
+                <folder>example_corpora/aperire</folder>
+            </filters>
+        </collection>
+        <collection>
+            <name lang="fre">Priapées</name>
+            <name lang="eng">Priapées</name>
+            <identifier>sources</identifier>
+            <filters>
+                <id-starts-with>urn:cts:latinLit:phi1103</id-starts-with>
+            </filters>
+        </collection>
+    </collections>
+</configuration>

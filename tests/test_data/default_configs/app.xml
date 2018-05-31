@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<?xml-model href="./configuration-schemas/app.rng"
+    schematypens="http://relaxng.org/ns/structure/1.0"?>
+<configuration>
+    <full-text-route>true</full-text-route>
+    <about-route>true</about-route>
+    <chunking>
+        <identifier-regexp level="1" level-name="Priapée {passage}">^urn:cts:latinLit:phi1103\..*$</identifier-regexp>
+        <citation-system level="2" level-name="Chapitre {passage}" group-by="5">book,chapter</citation-system>
+        <hardcoded identifier="urn:cts:aperire:delver.init.opp-lat1">
+            <ref start="2" end="3">Leçon 2 et 3</ref>
+            <ref id="4">Leçon 4</ref>
+            <ref id="5">Leçon 5</ref>
+            <ref id="6">Leçon 6</ref>
+            <ref id="7">Leçon 7</ref>
+            <ref id="8">Leçon 8</ref>
+            <ref id="9">Leçon 9</ref>
+        </hardcoded>
+    </chunking>
+    <full-text-only>
+        <id>urn:cts:pompei:cil004-01700.01776.manfred-lat1</id>
+    </full-text-only>
+    <xslts>
+        <default>xsl/default.xsl</default>
+        <xsl identifier="urn:cts:pompei:cil004-01700.01776.manfred-lat1">xsl/inscription.xsl</xsl>
+        <xsl identifier="urn:cts:aperire:delver.init.opp-lat1">xsl/copy.xsl</xsl>
+    </xslts>
+    <additional-pages>
+        <page id="credits" template="credits.html">
+            <link-title>Credits</link-title>
+        </page>
+    </additional-pages>
+</configuration>
