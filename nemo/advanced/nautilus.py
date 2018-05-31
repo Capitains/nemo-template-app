@@ -42,7 +42,6 @@ def collection_dispatcher_builder(
                 break
 
         for anonymous_function in directory_filters:
-            print(collection, path)
             if anonymous_function(collection, path=path) is True:
                 directory_results = True
                 break

@@ -125,7 +125,14 @@ class BaseTest(TestCase):
         self.nemo = None
         self.nautilus = None
 
+        self.graph.remove((None, None, None))
+
+    @property
+    def graph(self):
+        return get_graph()
+
     def tearDown(self):
+        self.graph.remove((None, None, None))
         shutil.copy2(self.origin_app_xml, self.app_xml)
         shutil.copy2(self.origin_corpora_xml, self.corpora_xml)
         os.remove(self.origin_app_xml)
@@ -135,12 +142,22 @@ class BaseTest(TestCase):
             del self.client
 
         if self.nemo or self.nautilus:
-            get_graph().remove((None, None, None))
-
             if self.nemo:
                 del self.nemo
             if self.nautilus:
+                self.nautilus.resolver.cache.clear()
                 del self.nautilus
+
+        shutil.rmtree(
+            os.path.abspath(
+                os.path.join(
+                    os.path.dirname(__file__),
+                    "..", "cache_folder"
+                )
+            ),
+            ignore_errors=True
+        )
+
 
     def create_corpora(self, cache_folder="./cache_folder", corpora=None):
         return CorporaConfig(cache_folder, corpora)
