@@ -1,6 +1,9 @@
 # Nemo Template App
 
+[![Build Status](https://travis-ci.org/Capitains/nemo-template-app.svg?branch=master)](https://travis-ci.org/Capitains/nemo-template-app)
+[![Coverage Status](https://coveralls.io/repos/github/Capitains/nemo-template-app/badge.svg?branch=master)](https://coveralls.io/github/Capitains/nemo-template-app?branch=master)
 [![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)
+
 
 ## Introduction
 
