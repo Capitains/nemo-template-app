@@ -11,19 +11,15 @@ from capitains_nautilus.cts.resolver import NautilusCTSResolver
 from .utils import relative_folder
 
 
-def collection_dispatcher_builder(
-        collection,
-        prefix_filters, citation_filters, directory_filters,
-        path=None, **kwargs):
+def collection_dispatcher_builder(prefix_filters, citation_filters, directory_filters):
     """
 
     Any condition that is True would make the would category True.
     All condition's category need to be True : A filter and a Path needs to be True
 
-    :param collection:
     :param prefix_filters:
     :param citation_filters:
-    :param directory_filter:
+    :param directory_filters:
     :return:
     """
     def dispatcher(collection, path=None, **kwargs):
@@ -88,32 +84,39 @@ def build_resolver(configuration_file):
         for name in collection.xpath("./name"):
             current_collection.set_label(name.text, name.get("lang"))
 
+        prefix_filters = []
+        citation_filters = []
+        directory_filters = []
+
         # We look at dispatching filters in the collection
         for filters in collection.xpath("./filters"):
             # We register prefix filters
-            prefix_filters = []
             for prefix in filters.xpath("./id-starts-with/text()"):
-                prefix_filters.append(lambda collection: str(collection.id).startswith(prefix))
-
-            # We register citation filters
-            citation_filters = []
-            for citation_name in filters.xpath("./citation-contains/text()"):
-                citation_filters.append(lambda collection: citation_contain_filter(collection, citation_name))
-
-            # We register path based filters
-            directory_filters = []
-            for target_directory in filters.xpath("./folder/text()"):
-                directory_filters.append(
-                    lambda collection, path=None: path.startswith(
-                        relative_folder(configuration_file, target_directory)
-                    )
+                prefix_filters.append(
+                    lambda collection, starts_with=prefix:
+                        str(collection.id).startswith(starts_with)
                 )
 
+            # We register citation filters
+            for citation_name in filters.xpath("./citation-contains/text()"):
+                citation_filters.append(
+                    lambda collection, citation_system=citation_name:
+                        citation_contain_filter(collection, citation_system)
+                )
+
+            # We register path based filters
+            for target_directory in filters.xpath("./folder/text()"):
+                current_folder = relative_folder(configuration_file, target_directory)
+                directory_filters.append(
+                    lambda collection, path=None, starts_with=current_folder:
+                        path.startswith(starts_with)
+                )
+
+        if prefix_filters or citation_filters or directory_filters:
             filters_to_register += [
                 (
                     identifier,
                     collection_dispatcher_builder(
-                        collection,
                         prefix_filters,
                         citation_filters,
                         directory_filters
