@@ -13,13 +13,13 @@ Nous utiserons Python 3 dans notre cours. Les versions précédentes peuvent pos
 Utilisez bien la version 3.6 proposée. Une fois installée, tapez ensuite
 
 ```shell
-conda create -n cours-python
+conda create -n nemo-env
 ```
 
 suivi de
 
 ```shell
-source activate cours-python
+source activate nemo-env
 ```
 
 Cette dernière active un environnement de python qui nous permet de ne pas modifier l'environnement général de votre ordinateur.
@@ -49,12 +49,12 @@ sudo apt-get install python3 libfreetype6-dev python3-pip python3-virtualenv
 Puis, une fois cela installé, faites :
 
 ```shell
-virtualenv ~/.cours-python -p python3
+virtualenv ~/.nemo-env -p python3
 ```
 Cela créera un environnement virtuel dans lequel nous pourrons installer l'ensemble des informations nécessaires. Allez, dans le terminal, dans le dossier git du cours que vous avez cloné localement et tapez :
 
 ```shell
-source ~/.cours-python/bin/activate
+source ~/.nemo-env/bin/activate
 ```
 
 Cette commande sera obligatoire à chaque fois que vous voudrez travailler avec le cours. Dans le même terminal, tapez maintenant

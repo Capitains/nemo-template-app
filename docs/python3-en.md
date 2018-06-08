@@ -12,11 +12,11 @@ Installation instructions can be found at http://docs.continuum.io/anaconda/inst
 
 Install the most recent version of 3.6. Once it is installed, enter the following on your terminal:
 
-```conda create -n cours-python```
+```conda create -n nemo-env```
 
 Followed by 
 
-```source activate cours-python```
+```source activate nemo-env```
 
 This last step activates a local python environment, preventing changes the general python environment on your computer.
 
@@ -34,14 +34,14 @@ Open a terminal window and enter:
 
 Once installed, enter:
 
-```virtualenv ~/.cours-python -p python3```
+```virtualenv ~/.nemo-env -p python3```
 
 That will create a virtual environment in which you can install all of the necessary libraries. 
 
 At the terminal, __enter the directory containing the local git clone of this tutorial's repository on your machine__, and from within this directory 
 type the following commands:
 
-```source ~/.cours-python/bin/activate```
+```source ~/.nemo-env/bin/activate```
 
 You will need to type this each time you want to work on the tutorial. 
 
