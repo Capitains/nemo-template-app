@@ -1,7 +1,7 @@
 Nemo Template App
 =================
 
-|Build Status| |Coverage Status| |License: MPL 2.0|
+|Build Status| |Coverage Status| |License: MPL 2.0| |Demo Live Site 1|
 
 
 .. toctree::
@@ -83,3 +83,5 @@ License 2.0.
    :target: https://coveralls.io/github/Capitains/nemo-template-app?branch=master
 .. |License: MPL 2.0| image:: https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg
    :target: https://opensource.org/licenses/MPL-2.0
+.. |Demo Live Site 1| image:: https://img.shields.io/badge/Demo-Site%201-green.svg
+   :target: http://nemo-template-app-demo-prod.herokuapp.com/
